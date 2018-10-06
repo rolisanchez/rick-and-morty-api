@@ -1,0 +1,16 @@
+# vim: syntax=yaml
+# Uncomment below to specify your own resources.
+# See https://github.com/jondot/blade for more information.
+#
+
+blades:
+  # App Images
+  - source: image_resources/AppIconRM.png
+    mount: Assets.xcassets/AppIcon.appiconset
+    contents: true
+  - source: image_resources/RickAndMortyTransparent.png
+    mount: Assets.xcassets/RickAndMortyTransparent.imageset
+    contents: true
+  - source: image_resources/RickAndMortyLarge.png
+    mount: Assets.xcassets/RickAndMortyLarge.imageset
+    contents: true
