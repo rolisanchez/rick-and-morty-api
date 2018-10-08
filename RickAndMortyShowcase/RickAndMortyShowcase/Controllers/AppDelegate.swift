@@ -15,32 +15,91 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        AppSettings.charactersApiURL = "https://rickandmortyapi.com/api/character"
+        AppSettings.episodesApiURL = "https://rickandmortyapi.com/api/location"
+        AppSettings.locationsApiURL = "https://rickandmortyapi.com/api/episode"
+
         return true
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-    }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        self.checkLastUpdateOrUpdateInfo()
     }
 
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    func checkLastUpdateOrUpdateInfo() {
+        let lastUpdatedSetting = AppSettings.lastUpdate as? Date
+        print("lastUpdatedSetting \(lastUpdatedSetting)")
+        
+        var shouldUpdate = true
+        
+        // Time interval is in seconds, so 20 minutes * 60 seconds
+        if let lastUpdated = lastUpdatedSetting, (Date().timeIntervalSince(lastUpdated) < 20.0*60.0) {
+            shouldUpdate = false
+        }
+        if shouldUpdate {
+            self.updateInfo()
+        } else {
+            
+        }
+        
     }
-
-
+    
+    func updateInfo() {
+        let charactersApiURLString = AppSettings.charactersApiURL
+        print("charactersApiURL \(charactersApiURLString)")
+        let episodesApiURLString = AppSettings.episodesApiURL
+        print("episodesApiURLString \(episodesApiURLString)")
+        let locationsApiURLString = AppSettings.locationsApiURL
+        print("locationsApiURLString \(locationsApiURLString)")
+        
+        guard let charactersApiURL = URL(string: charactersApiURLString!) else {
+            print("characters api url string not found")
+            return
+        }
+        
+        guard let episodesApiURL = URL(string: episodesApiURLString!) else {
+            print("episodes api url string not found")
+            return
+        }
+        
+        guard let locationsApiURL = URL(string: episodesApiURLString!) else {
+            print("locations api url string not found")
+            return
+        }
+        
+        let charactersRequest = URLRequest(url: charactersApiURL)
+        let episodesRequest = URLRequest(url: episodesApiURL)
+        let locationsRequest = URLRequest(url: locationsApiURL)
+        
+        let charactersTask = URLSession.shared.dataTask(with: charactersRequest) {(data, response, error) -> Void in
+            if error == nil && data != nil {
+                let characterList = CharacterList(data: data!)
+                
+                if let goodCharacterList = characterList {
+                    if self.saveCharacterList(characterList: goodCharacterList) {
+//                        UserDefaults.standard.set(Date(), forKey: "lastUpdate")
+                    }
+                }
+                
+                print("Loaded remote characters")
+            }
+        }
+        
+        charactersTask.resume()
+    }
+    
+    func characterListPath() -> String {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let filePath = paths[0].appendingPathComponent("characterListFile.plist")
+        return filePath.path
+    }
+    
+    func saveCharacterList(characterList: CharacterList) -> Bool {
+        let success = NSKeyedArchiver.archiveRootObject(characterList, toFile: characterListPath())
+        assert(success, "failed to write characterList archive")
+        return success
+    }
 }
 

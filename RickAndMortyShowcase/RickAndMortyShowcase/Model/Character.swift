@@ -16,15 +16,13 @@ class Character: NSObject, NSCoding {
     let type: String
     let gender: String
     let originName: String
-    let originURL: URL
+//    let originURL: URL
     let locationName: String
-    let locationURL: URL
+//    let locationURL: URL
     let imageURL: URL
-    let episodeURL: URL
     let url: URL
-    let created: Date
     
-    init(id: Int, name: String, status: String, species: String, type: String, gender: String, originName: String, originURL: URL, locationName: String, locationURL: URL, imageURL: URL, episodeURL: URL, url: URL, created: Date) {
+    init(id: Int, name: String, status: String, species: String, type: String, gender: String, originName: String, locationName: String, imageURL: URL, url: URL) {
         self.id = id
         self.name = name
         self.status = status
@@ -32,13 +30,9 @@ class Character: NSObject, NSCoding {
         self.type = type
         self.gender = gender
         self.originName = originName
-        self.originURL = originURL
         self.locationName = locationName
-        self.locationURL = locationURL
         self.imageURL = imageURL
-        self.episodeURL = episodeURL
         self.url = url
-        self.created = created
     }
     
     func encode(with aCoder: NSCoder) {
@@ -49,13 +43,9 @@ class Character: NSObject, NSCoding {
         aCoder.encode(self.type, forKey: "characterType")
         aCoder.encode(self.gender, forKey: "characterGender")
         aCoder.encode(self.originName, forKey: "characterOriginName")
-        aCoder.encode(self.originURL, forKey: "characterOriginURL")
         aCoder.encode(self.locationName, forKey: "characterLocationName")
-        aCoder.encode(self.locationURL, forKey: "characterLocationURL")
         aCoder.encode(self.imageURL, forKey: "characterImageURL")
-        aCoder.encode(self.episodeURL, forKey: "characterEpisodeURL")
         aCoder.encode(self.url, forKey: "characterURL")
-        aCoder.encode(self.created, forKey: "characterCreated")
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
@@ -66,14 +56,10 @@ class Character: NSObject, NSCoding {
         let storedType = aDecoder.decodeObject(forKey: "characterType") as? String
         let storedGender = aDecoder.decodeObject(forKey: "characterGender") as? String
         let storedOriginName = aDecoder.decodeObject(forKey: "characterOriginName") as? String
-        let storedOriginURL = aDecoder.decodeObject(forKey: "characterOriginURL") as? URL
         let storedLocationName = aDecoder.decodeObject(forKey: "characterLocationName") as? String
-        let storedLocationURL = aDecoder.decodeObject(forKey: "characterLocationURL") as? URL
         let storedImageURL = aDecoder.decodeObject(forKey: "characterImageURL") as? URL
-        let storedEpisodeURL = aDecoder.decodeObject(forKey: "characterEpisodeURL") as? URL
         let storedURL = aDecoder.decodeObject(forKey: "characterURL") as? URL
-        let storedCreated = aDecoder.decodeObject(forKey: "characterCreated") as? Date
         
-        self.init(id: storedId!, name: storedName!, status: storedStatus!, species: storedSpecies!, type: storedType!, gender: storedGender!, originName: storedOriginName!, originURL: storedOriginURL!, locationName: storedLocationName!, locationURL: storedLocationURL!, imageURL: storedImageURL!, episodeURL: storedEpisodeURL!, url: storedURL!, created: storedCreated!)
+        self.init(id: storedId!, name: storedName!, status: storedStatus!, species: storedSpecies!, type: storedType!, gender: storedGender!, originName: storedOriginName!, locationName: storedLocationName!, imageURL: storedImageURL!, url: storedURL!)
     }
 }
