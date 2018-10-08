@@ -19,28 +19,28 @@ func fixJsonData (data: Data) -> Data {
 
 
 class CharacterList: NSObject, NSCoding {
-    let characterList: [Character]
+    let characters: [Character]
 
-    init(characterList newCharacterList: [Character]) {
-        self.characterList = newCharacterList
+    init(characters newCharacters: [Character]) {
+        self.characters = newCharacters
     }
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(self.characterList, forKey: "characteList")
+        aCoder.encode(self.characters, forKey: "characters")
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        let storedCharacterList = aDecoder.decodeObject(forKey: "characterList") as? [Character]
+        let storedCharacters = aDecoder.decodeObject(forKey: "characters") as? [Character]
         
-        guard storedCharacterList != nil else {
+        guard storedCharacters != nil else {
             print("could not decode stored characters")
             return nil
         }
-        self.init(characterList: storedCharacterList!)
+        self.init(characters: storedCharacters!)
     }
     
     convenience init?(data: Data) {
-        var newCharacterList = [Character]()
+        var newCharacters = [Character]()
         
         let fixedData = fixJsonData(data: data)
         var jsonObject: Dictionary<String, AnyObject>?
@@ -99,7 +99,7 @@ class CharacterList: NSObject, NSCoding {
                 print("failed getting originName")
                 continue
             }
-                        
+            
             guard let locationName = characterDict["location"]!["name"] as? String else {
                 print("failed getting locationName")
                 continue
@@ -126,10 +126,10 @@ class CharacterList: NSObject, NSCoding {
             }
             
             
-            newCharacterList.append(Character(id: id, name: name, status: status, species: species, type: type, gender: gender, originName: originName, locationName: locationName, imageURL: imageURL, url: url))
+            newCharacters.append(Character(id: "\(id)", name: name, status: status, species: species, type: type, gender: gender, originName: originName, locationName: locationName, imageURL: imageURL, url: url))
         }
         
-        print("charactersList \(newCharacterList.count)")
-        self.init(characterList: newCharacterList)
+        print("charactersList \(newCharacters.count)")
+        self.init(characters: newCharacters)
     }
 }

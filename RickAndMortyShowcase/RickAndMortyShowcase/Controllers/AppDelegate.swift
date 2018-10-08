@@ -38,10 +38,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let lastUpdated = lastUpdatedSetting, (Date().timeIntervalSince(lastUpdated) < 20.0*60.0) {
             shouldUpdate = false
         }
+        shouldUpdate = true
         if shouldUpdate {
             self.updateInfo()
-        } else {
-            
+        }
+        else {
+            print("Didn't need to update")
         }
         
     }
@@ -79,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 if let goodCharacterList = characterList {
                     if self.saveCharacterList(characterList: goodCharacterList) {
-//                        UserDefaults.standard.set(Date(), forKey: "lastUpdate")
+                        AppSettings.lastUpdate = Date()
                     }
                 }
                 

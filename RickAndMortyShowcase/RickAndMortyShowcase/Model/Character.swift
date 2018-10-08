@@ -9,7 +9,7 @@
 import Foundation
 
 class Character: NSObject, NSCoding {
-    let id: Int
+    let id: String
     let name: String
     let status: String
     let species: String
@@ -22,7 +22,7 @@ class Character: NSObject, NSCoding {
     let imageURL: URL
     let url: URL
     
-    init(id: Int, name: String, status: String, species: String, type: String, gender: String, originName: String, locationName: String, imageURL: URL, url: URL) {
+    init(id: String, name: String, status: String, species: String, type: String, gender: String, originName: String, locationName: String, imageURL: URL, url: URL) {
         self.id = id
         self.name = name
         self.status = status
@@ -49,7 +49,7 @@ class Character: NSObject, NSCoding {
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        let storedId = aDecoder.decodeObject(forKey: "characterId") as? Int
+        let storedId = aDecoder.decodeObject(forKey: "characterId") as? String
         let storedName = aDecoder.decodeObject(forKey: "characterName") as? String
         let storedStatus = aDecoder.decodeObject(forKey: "characterStatus") as? String
         let storedSpecies = aDecoder.decodeObject(forKey: "characterSpecies") as? String
