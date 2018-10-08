@@ -45,9 +45,7 @@ class EpisodesTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("segue")
         if segue.identifier == "showEpisodeDetails" {
-            print("segue2222")
             let indexPath = self.tableView.indexPathForSelectedRow!
             
             let destination = segue.destination as! EpisodeDetailsViewController

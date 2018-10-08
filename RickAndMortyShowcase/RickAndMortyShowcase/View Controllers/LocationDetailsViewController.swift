@@ -15,4 +15,10 @@ class LocationDetailsViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var typeLabel: UILabel!
     @IBOutlet weak var dimensionLabel: UILabel!
+    
+    override func viewDidLoad() {
+        nameLabel.text = location?.name
+        typeLabel.text = location?.type
+        dimensionLabel.text = location?.dimension
+    }
 }

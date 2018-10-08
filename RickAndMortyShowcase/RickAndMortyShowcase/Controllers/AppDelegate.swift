@@ -36,8 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         var shouldUpdate = true
         
-        // Time interval is in seconds, so 20 minutes * 60 seconds
-        if let lastUpdated = lastUpdatedSetting, (Date().timeIntervalSince(lastUpdated) < 20.0*60.0) {
+        // Time interval is in seconds, so 60 minutes * 60 seconds
+        if let lastUpdated = lastUpdatedSetting, (Date().timeIntervalSince(lastUpdated) < 60.0*60.0) {
             shouldUpdate = false
         }
         if shouldUpdate {
@@ -55,8 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         var shouldUpdate = true
         
-        // Time interval is in seconds, so 20 minutes * 60 seconds
-        if let lastUpdated = lastUpdatedSetting, (Date().timeIntervalSince(lastUpdated) < 20.0*60.0) {
+        // Time interval is in seconds, so 60 minutes * 60 seconds
+        if let lastUpdated = lastUpdatedSetting, (Date().timeIntervalSince(lastUpdated) < 60.0*60.0) {
             shouldUpdate = false
         }
         if shouldUpdate {
@@ -73,8 +73,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         var shouldUpdate = true
         
-        // Time interval is in seconds, so 20 minutes * 60 seconds
-        if let lastUpdated = lastUpdatedSetting, (Date().timeIntervalSince(lastUpdated) < 20.0*60.0) {
+        // Time interval is in seconds, so 60 minutes * 60 seconds
+        if let lastUpdated = lastUpdatedSetting, (Date().timeIntervalSince(lastUpdated) < 60.0*60.0) {
             shouldUpdate = false
         }
         if shouldUpdate {
@@ -151,21 +151,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let locationsRequest = URLRequest(url: locationsApiURL)
         
-//        let locationsTask = URLSession.shared.dataTask(with: episodesRequest) {(data, response, error) -> Void in
-//            if error == nil && data != nil {
-//                let locationList = LocationList(data: data!)
-//
-//                if let goodLocationList = locationList {
-//                    if self.saveLocationList(locationList: goodLocationList) {
-//                        AppSettings.lastUpdateLocations = Date()
-//                    }
-//                }
-//
-//                print("Loaded remote locations")
-//            }
-//        }
-//
-//        locationsTask.resume()
+        let locationsTask = URLSession.shared.dataTask(with: locationsRequest) {(data, response, error) -> Void in
+            if error == nil && data != nil {
+                let locationList = LocationList(data: data!)
+
+                if let goodLocationList = locationList {
+                    if self.saveLocationList(locationList: goodLocationList) {
+                        AppSettings.lastUpdateLocations = Date()
+                    }
+                }
+
+                print("Loaded remote locations")
+            }
+        }
+
+        locationsTask.resume()
     }
     
 
