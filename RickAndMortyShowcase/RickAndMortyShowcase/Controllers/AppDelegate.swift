@@ -59,7 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let lastUpdated = lastUpdatedSetting, (Date().timeIntervalSince(lastUpdated) < 20.0*60.0) {
             shouldUpdate = false
         }
-        shouldUpdate = true
         if shouldUpdate {
             self.updateEpisodes()
         }
@@ -71,7 +70,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func checkLastUpdateOrUpdateLocations() {
         let lastUpdatedSetting = AppSettings.lastUpdateLocations
-        print("lastUpdatedSetting Locations \(lastUpdatedSetting)")
         
         var shouldUpdate = true
         
@@ -90,7 +88,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func updateCharacters() {
         let charactersApiURLString = AppSettings.charactersApiURL
-        print("charactersApiURL \(charactersApiURLString)")
         
         guard let charactersApiURL = URL(string: charactersApiURLString!) else {
             print("characters api url string not found")
@@ -119,7 +116,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func updateEpisodes() {
         let episodesApiURLString = AppSettings.episodesApiURL
-        print("episodesApiURLString \(episodesApiURLString)")
         
         guard let episodesApiURL = URL(string: episodesApiURLString!) else {
             print("episodes api url string not found")
@@ -147,7 +143,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func updateLocations() {
         let locationsApiURLString = AppSettings.locationsApiURL
-        print("locationsApiURLString \(locationsApiURLString)")
 
         guard let locationsApiURL = URL(string: locationsApiURLString!) else {
             print("locations api url string not found")
@@ -185,8 +180,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         assert(success, "failed to write episodeList archive")
         return success
     }
-    
-    
     
     func saveLocationList(locationList: LocationList) -> Bool {
         let success = NSKeyedArchiver.archiveRootObject(locationList, toFile: Helpers.locationListPath())

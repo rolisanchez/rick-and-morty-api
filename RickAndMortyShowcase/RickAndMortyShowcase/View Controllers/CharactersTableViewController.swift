@@ -77,7 +77,6 @@ class CharactersTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if segue.identifier == "showCharacterDetails" {
             let indexPath = self.tableView.indexPathForSelectedRow!
 
