@@ -81,4 +81,18 @@ class CharactersTableViewController: UITableViewController {
         let unarchivedObject = NSKeyedUnarchiver.unarchiveObject(withFile: path)
         characterList = unarchivedObject as? CharacterList
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "showCharacterDetails" {
+            let indexPath = self.tableView.indexPathForSelectedRow!
+
+            let destination = segue.destination as! CharacterDetailsViewController
+            
+            let character = self.characterList!.characters[indexPath.row]
+
+            destination.character = character
+        }
+        
+    }
 }
