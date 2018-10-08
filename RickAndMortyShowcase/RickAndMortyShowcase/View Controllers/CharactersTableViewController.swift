@@ -70,14 +70,8 @@ class CharactersTableViewController: UITableViewController {
         
     }
     
-    func characterListPath() -> String {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        let filePath = paths[0].appendingPathComponent("characterListFile.plist")
-        return filePath.path
-    }
-    
     func readCharacterList() {
-        let path = characterListPath()
+        let path = Helpers.characterListPath()
         let unarchivedObject = NSKeyedUnarchiver.unarchiveObject(withFile: path)
         characterList = unarchivedObject as? CharacterList
     }

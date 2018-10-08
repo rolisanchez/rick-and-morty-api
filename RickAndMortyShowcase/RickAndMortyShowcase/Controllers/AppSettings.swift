@@ -14,7 +14,9 @@ final class AppSettings {
         case charactersApiURL
         case episodesApiURL
         case locationsApiURL
-        case lastUpdate
+        case lastUpdateCharacters
+        case lastUpdateEpisodes
+        case lastUpdateLocations
     }
     
     static var charactersApiURL: String! {
@@ -65,19 +67,52 @@ final class AppSettings {
         }
     }
     
-    static var lastUpdate: Date? {
+    static var lastUpdateCharacters: Date? {
         get {
-            return UserDefaults.standard.object(forKey: SettingKey.lastUpdate.rawValue) as? Date
+            return UserDefaults.standard.object(forKey: SettingKey.lastUpdateCharacters.rawValue) as? Date
         }
         set {
             let defaults = UserDefaults.standard
-            let key = SettingKey.lastUpdate.rawValue
+            let key = SettingKey.lastUpdateCharacters.rawValue
             
-            if let lastUpdate = newValue {
-                defaults.set(lastUpdate, forKey: key)
+            if let lastUpdateCharacters = newValue {
+                defaults.set(lastUpdateCharacters, forKey: key)
             } else {
                 defaults.removeObject(forKey: key)
             }
         }
     }
+    
+    static var lastUpdateEpisodes: Date? {
+        get {
+            return UserDefaults.standard.object(forKey: SettingKey.lastUpdateEpisodes.rawValue) as? Date
+        }
+        set {
+            let defaults = UserDefaults.standard
+            let key = SettingKey.lastUpdateEpisodes.rawValue
+            
+            if let lastUpdateEpisodes = newValue {
+                defaults.set(lastUpdateEpisodes, forKey: key)
+            } else {
+                defaults.removeObject(forKey: key)
+            }
+        }
+    }
+    
+    static var lastUpdateLocations: Date? {
+        get {
+            return UserDefaults.standard.object(forKey: SettingKey.lastUpdateLocations.rawValue) as? Date
+        }
+        set {
+            let defaults = UserDefaults.standard
+            let key = SettingKey.lastUpdateLocations.rawValue
+            
+            if let lastUpdateLocations = newValue {
+                defaults.set(lastUpdateLocations, forKey: key)
+            } else {
+                defaults.removeObject(forKey: key)
+            }
+        }
+    }
+    
 }

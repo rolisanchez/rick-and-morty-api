@@ -8,16 +8,6 @@
 
 import Foundation
 
-
-
-
-func fixJsonData (data: Data) -> Data {
-    var dataString = String(data: data, encoding: String.Encoding.utf8)
-    dataString = dataString?.replacingOccurrences(of: "\\'", with: "'")
-    return (dataString?.data(using: String.Encoding.utf8))!
-}
-
-
 class CharacterList: NSObject, NSCoding {
     let characters: [Character]
 
@@ -42,7 +32,7 @@ class CharacterList: NSObject, NSCoding {
     convenience init?(data: Data) {
         var newCharacters = [Character]()
         
-        let fixedData = fixJsonData(data: data)
+        let fixedData = Helpers.fixJsonData(data: data)
         var jsonObject: Dictionary<String, AnyObject>?
         
         do {
@@ -129,7 +119,7 @@ class CharacterList: NSObject, NSCoding {
             newCharacters.append(Character(id: "\(id)", name: name, status: status, species: species, type: type, gender: gender, originName: originName, locationName: locationName, imageURL: imageURL, url: url))
         }
         
-        print("charactersList \(newCharacters.count)")
+        print("characters count \(newCharacters.count)")
         self.init(characters: newCharacters)
     }
 }
